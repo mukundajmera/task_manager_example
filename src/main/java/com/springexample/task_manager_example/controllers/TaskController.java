@@ -2,9 +2,12 @@ package com.springexample.task_manager_example.controllers;
 
 import com.springexample.task_manager_example.dto.CreateTaskDTO;
 import com.springexample.task_manager_example.dto.ErrorResponseDTO;
+import com.springexample.task_manager_example.dto.TaskResponseDTO;
 import com.springexample.task_manager_example.dto.UpdateTaskDTO;
 import com.springexample.task_manager_example.entities.TaskEntity;
+import com.springexample.task_manager_example.service.NoteService;
 import com.springexample.task_manager_example.service.TaskService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +19,12 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final NoteService noteService;
 
-    public TaskController(TaskService taskService) {
+    private ModelMapper modelMapper = new ModelMapper();
+    public TaskController(TaskService taskService, NoteService noteService) {
         this.taskService = taskService;
+        this.noteService = noteService;
     }
 
     @GetMapping("")
@@ -28,12 +34,15 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskEntity> getTaskById(@PathVariable int id) {
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable int id) {
         var task = taskService.getTaskById(id);
+        var notes = noteService.getNotesForTask(id);
         if(task == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(task);
+        var taskResponse =  modelMapper.map(task, TaskResponseDTO.class);
+        taskResponse.setNotes(notes);
+        return ResponseEntity.ok(taskResponse);
     }
 
 

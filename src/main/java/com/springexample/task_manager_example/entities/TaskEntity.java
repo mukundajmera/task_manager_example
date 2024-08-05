@@ -3,6 +3,7 @@ package com.springexample.task_manager_example.entities;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class TaskEntity {
