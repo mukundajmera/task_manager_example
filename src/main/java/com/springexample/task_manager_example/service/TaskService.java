@@ -1,6 +1,7 @@
 package com.springexample.task_manager_example.service;
 
 import com.springexample.task_manager_example.entities.TaskEntity;
+import jakarta.annotation.Nullable;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,23 @@ public class TaskService {
             }
         }
         return null;
+    }
+
+    public TaskEntity updateTask(int id, String description, String deadline, Boolean completed) throws ParseException {
+        TaskEntity task = getTaskById(id);
+        if (task == null) {
+            return null;
+        }
+        if(description != null) {
+            task.setDescription(description);
+        }
+        if(deadline != null) {
+            task.setDeadline(deadlineFormatter.parse(deadline));
+        }
+        if(completed != null) {
+            task.setCompleted(completed);
+        }
+        return task;
     }
 
 }
