@@ -1,14 +1,11 @@
 package com.springexample.task_manager_example.service;
 
 import com.springexample.task_manager_example.entities.TaskEntity;
-import jakarta.annotation.Nullable;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Service
 public class TaskService {

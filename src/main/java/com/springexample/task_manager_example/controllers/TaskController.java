@@ -21,7 +21,7 @@ public class TaskController {
     private final TaskService taskService;
     private final NoteService noteService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
     public TaskController(TaskService taskService, NoteService noteService) {
         this.taskService = taskService;
         this.noteService = noteService;
@@ -29,7 +29,7 @@ public class TaskController {
 
     @GetMapping("")
     public ResponseEntity<List<TaskEntity>> getTasks() {
-        var tasks =  taskService.getTasks();
+        var tasks = taskService.getTasks();
         return ResponseEntity.ok(tasks);
     }
 
